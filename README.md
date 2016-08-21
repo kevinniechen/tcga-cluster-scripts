@@ -23,7 +23,11 @@ To allow programs to run 24/7 on the server regardless of whether your computer 
 cd $PBS_O_WORKDIR
 echo 'Hello World' > output.txt
 ```
-The first line is just a header to tell the interpreter to run bash. The second line starting with #PBS, is an option saying to run the job with 1 node and 1 processor. PBS options allow you to specify how you want the job to run (maximum time before it closes, how many processors to use, whether to email you if the job has finished, etc).
+The first line is just a header to tell the interpreter to run bash.
+
+The second line starting with #PBS, is an option saying to run the job with 1 node and 1 processor. PBS options allow you to specify how you want the job to run (maximum time before it closes, how many processors to use, whether to email you if the job has finished, etc).
+
+The third line makes use of the variable ```$PBS_O_WORKDIR```, which will evaluate to the directory in which you ran the script. If you do not ```cd $PBS_O_WORKDIR``` at the beginning of your job, the job will run at the ~ root folder instead. 
 
 To submit the job file (*myjobfile.pbs*), enter in the command:
 ```bash
