@@ -142,7 +142,7 @@ The following usage commands assume that you are in the parent directory of the 
 #### scripts/index-bams.pbs
 Indexes (and possibly sorts) all .bam files in the current directory
 
-Creates .bai files for all .bam files in the current directory. Doesn't change the original .bam files. Need to ensure that the bam files are already sorted. TCGA files are usually sorted. To turn on sorting befor indexing, ```nano scripts/index-bams.pbs``` and remove the '#' from line 15 and 16 and comment out line 17 like below:
+Creates .bai files for all .bam files in the current directory. Doesn't change the original .bam files. Need to ensure that the bam files are already sorted. TCGA files are usually sorted. To turn on sorting before indexing, ```nano scripts/index-bams.pbs``` and remove the '#' from line 15 and 16 and comment out line 17 like below:
 ```bash
 samtools sort "${bamfile}" "${bamfile}.sorted"
 samtools index ${bamfile}.sorted > err/$PBS_JOBID > logs/$PBS_JOBID
