@@ -117,11 +117,13 @@ Please note that gdc-client was already installed locally onto our local/ direct
 
 [You can also download the gdc-client locally on your computer](https://gdc.nci.nih.gov/access-data/gdc-data-transfer-tool).
 
-## Download a list of desired TCGA files
+## Download a list of desired TCGA files (normal/cancer)
 Minimize the terminal (but do not close it), and head to the [Genomic Data Commons Data Portal](https://gdc-portal.nci.nih.gov/search/s)
 
 Use the sidebar to filter out the desired samples. For example, if you want all
 GBM RNA-seq samples, under the Cases tab, select Primary Site>Brain and Project>TCGA-GBM, and then under the Files tab, select Data Category>Raw Sequencing Data and Experimental Strategy>RNA-seq. The end-result should be 174 files.
+
+In order to filter for normal or cancer files, click the Cases tab and click Add a Case/Biospecimen Filter. Then add the samples.sample_type field. You will then be able to filter by normal and cancer samples.
 
 Click the Download Manifest button to download an xml file containing the IDs of all these files (so that you can download them onto the cluster). [More information regarding how to download individual and multiple IDs from TCGA can be found here.](https://gdc-docs.nci.nih.gov/Data_Transfer_Tool/Users_Guide/Preparing_for_Data_Download_and_Upload/)
 
