@@ -94,7 +94,6 @@ to save.
 Download basic TCGA and BAM scripts and set them as executable:
 ```bash
 git clone https://github.com/kevchn/tcga-cluster-scripts scripts/
-chmod +x scripts/*.sh
 ```
 
 ## Getting your TCGA authentication token
