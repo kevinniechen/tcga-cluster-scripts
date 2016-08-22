@@ -16,3 +16,4 @@ for bamfile in *.bam; do
 	# samtools index ${bamfile}.sorted > err/$PBS_JOBID > logs/$PBS_JOBID
 	samtools index $bamfile > err/$PBS_JOBID > logs/$PBS_JOBID
 done
+exit 0

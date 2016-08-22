@@ -35,7 +35,7 @@ qsub myjobfile.pbs
 ```
 The cluster will then begin running the commands specified in the job file. The Hello World job above will run and finish extremely quickly, but if you are running a file that takes a longer amount of time, you will probably want to check the status of your jobs at some point. To check the status of your running jobs, you can enter in the command:
 ```bash
-pbsn -u username
+qstat -u username
 ```
 Here is a real-world example of a job file that runs a bam-indexing script (not pictured here) and forwards the error and logs to specified directories:
 
@@ -112,10 +112,9 @@ Click on any specific file to get more information, including its UUID (for exam
 ## Downloading a single TCGA file onto the server
 If you have the UUID of a single TCGA file, use the new [gdc-data-transfer-tool](https://gdc.nci.nih.gov/access-data/gdc-data-transfer-tool):
 ```bash
-module add gdc-client
-gdc-client download 22a29915-6712-4f7a-8dba-985ae9a1f005 -t token.txt
+/ifs/projects/GRCBL-NGS/slowtemp/local/gdc-client download 22a29915-6712-4f7a-8dba-985ae9a1f005 -t token.txt
 ```
-Please note that the NCI-ATRF cluster may not have the gdc-client installed, or it may be under a different name, in which case the above commands will not work. Enter in `module list` to see if there are any modules called gdc, genomic-data-commons, or similar, and import that module instead. If no modules exist, contact the NCI helpdesk to request that the program be installed.
+Please note that gdc-client was already installed locally onto our local/ directory for convenience. The ATRF cluster does not have the tool available as a module as of yet.
 
 [You can also download the gdc-client locally on your computer](https://gdc.nci.nih.gov/access-data/gdc-data-transfer-tool).
 
@@ -134,14 +133,30 @@ In your project1/ folder, `nano manifest.xml` and paste in the XML information b
 ## Bulk downloading TCGA files onto the server
 Once you have the manifest.xml file, you can download the files using the new [gdc-data-transfer-tool](https://gdc.nci.nih.gov/access-data/gdc-data-transfer-tool):
 ```bash
-module add gdc-client
-gdc-client download -m manifest.xml -t token.txt
+/ifs/projects/GRCBL-NGS/slowtemp/local/gdc-client download -m manifest.xml -t token.txt
 ```
 
-You will most likely want to do this using a job script, so that the cluster will download the files 24/7 until the files are all downloaded.
+You will most likely want to do this using a job script, so that the cluster will download the files 24/7 until the files are all downloaded. A sample job script ```gdc-bulk-download.pbs``` has been provided in the section below.
 ***
 # Running this repository's jobfiles and scripts
 The following usage commands assume that you are in the parent directory of the scripts/ folder. If you are in a different directory, for example, projects1/data, you will have to provide either a different relative path for usage: ```qsub ../scripts/index-bams.pbs``` or an absolute path: ```qsub /ifs/projects/GRCBL-NGS/slowtemp/project1/scripts/index-bams.pbs```.
+
+## scripts/gdc-bulk-download.pbs
+Moves .bam files to new directories based on read-length and creates a summary of .bam file read-lengths
+
+Checks the read-length of the .bam files by looking at the header of the bam files and then moves the files into a new directory based on that read-length. Removes bam-files with multiple read-lengths. Used for programs that can only run on multiple .bam files of the same read-length. Summary file, bam-information.txt, gives read-count and read-length of each bam-file.
+
+Usage:
+* ```qsub scripts/gdc-bulk-download.pbs```
+
+Input:
+* manifest.xml
+* token.txt
+
+Returns:
+* sample1.bam
+* sample2.bam
+* sample3.bam
 
 ## scripts/index-bams.pbs
 Indexes (and possibly sorts) all .bam files in the current directory
@@ -176,11 +191,17 @@ Usage:
 
 Input:
 * sample1.bam
+* sample1.bai
 * sample2.bam
+* sample2.bai
 * sample3.bam
+* sample3.bai
 
 Returns:
 * bam-information.txt
 * bams-50/sample1.bam
+* bams-50/sample1.bai
 * bams-50/sample2.bam
+* bams-50/sample2.bai
 * bams-75/sample3.bam
+* bams-75/sample3.bai
