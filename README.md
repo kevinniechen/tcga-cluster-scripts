@@ -84,17 +84,18 @@ mkdir project1/
 cd project1/
 ```
 
-Create the cghub key:
-```bash
-nano cghub.key
-```
-Then copy and paste your TCGA key (in your email) into the folder, and enter Ctrl+X and then Y
-to save.
-
 Download basic TCGA and BAM scripts and set them as executable:
 ```bash
 git clone https://github.com/kevchn/tcga-cluster-scripts scripts/
 ```
+
+
+Create the token.txt:
+```bash
+nano token.txt
+```
+Then copy and paste your token.txt into the file, and enter Ctrl+X and then Y
+to save. See section below for instructions to generate your token.
 
 ## Getting your TCGA authentication token
 You will need an authentication token to download controlled data from TCGA (most raw-sequencing files). Minimize the terminal (but do not close it).
